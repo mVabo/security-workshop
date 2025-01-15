@@ -20,7 +20,7 @@ import {
 import { useAuth } from '@/contexts/auth-context';
 import { api } from '@/lib/api';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
@@ -45,6 +45,10 @@ export default function SpiesScreen() {
 		},
 		resolver: zodResolver(formSchema),
 	});
+
+	useEffect(() => {
+		getSpies();
+	}, []);
 
 	async function getSpies() {
 		const res = await api.get('/topsecret', {
@@ -79,59 +83,60 @@ export default function SpiesScreen() {
 
 	return (
 		<main className="w-screen h-screen flex justify-center items-center">
-			<div className="border border-border rounded-lg p-4 max-w-lg w-full shadow-lg">
+			<div className="border border-border rounded-lg p-4 max-w-lg w-full shadow-lg space-y-4">
 				<h1>Spies</h1>
-			</div>
-			<section className="space-y-4">
-				<Table>
-					<TableCaption>A list of all spies</TableCaption>
-					<TableHeader>
-						<TableRow>
-							<TableHead>Codename</TableHead>
-							<TableHead>Real Name</TableHead>
-						</TableRow>
-					</TableHeader>
-					<TableBody>
-						{spies.map((spy) => (
+
+				<section className="space-y-4">
+					<Table>
+						<TableCaption>A list of all spies</TableCaption>
+						<TableHeader>
 							<TableRow>
-								<TableCell>{spy.codeName}</TableCell>
-								<TableCell>{spy.realName}</TableCell>
+								<TableHead>Codename</TableHead>
+								<TableHead>Real Name</TableHead>
 							</TableRow>
-						))}
-					</TableBody>
-				</Table>
-			</section>
-			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-					<FormField
-						control={form.control}
-						name="codeName"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Code Name</FormLabel>
-								<FormControl>
-									<Input {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name="realName"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Real Name</FormLabel>
-								<FormControl>
-									<Input {...field} />
-								</FormControl>
-								<FormMessage />
-							</FormItem>
-						)}
-					/>
-					<Button type="submit">Add</Button>
-				</form>
-			</Form>
+						</TableHeader>
+						<TableBody>
+							{spies.map((spy) => (
+								<TableRow>
+									<TableCell>{spy.codeName}</TableCell>
+									<TableCell>{spy.realName}</TableCell>
+								</TableRow>
+							))}
+						</TableBody>
+					</Table>
+				</section>
+				<Form {...form}>
+					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+						<FormField
+							control={form.control}
+							name="codeName"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Code Name</FormLabel>
+									<FormControl>
+										<Input {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="realName"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Real Name</FormLabel>
+									<FormControl>
+										<Input {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<Button type="submit">Add</Button>
+					</form>
+				</Form>
+			</div>
 		</main>
 	);
 }
