@@ -65,7 +65,7 @@ export default function SpiesScreen() {
 	}
 
 	async function onSubmit(data: z.infer<typeof formSchema>) {
-		const res = await api.post('/spies', null, {
+		const res = await api.post('/topsecret', null, {
 			params: {
 				...data,
 				token,
