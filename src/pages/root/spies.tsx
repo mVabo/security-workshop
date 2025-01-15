@@ -47,7 +47,11 @@ export default function SpiesScreen() {
 	});
 
 	async function getSpies() {
-		const res = await api.get('/topsecret');
+		const res = await api.get('/topsecret', {
+			params: {
+				token,
+			},
+		});
 
 		if (res.status === 200) {
 			setSpies(res.data);
