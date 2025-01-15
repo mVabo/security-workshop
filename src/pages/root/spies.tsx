@@ -72,7 +72,7 @@ export default function SpiesScreen() {
 			},
 		});
 
-		if (res.status === 201) {
+		if (res.status === 200) {
 			toast.success('Spy added');
 			form.reset();
 			getSpies();
