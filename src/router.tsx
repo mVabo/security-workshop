@@ -8,13 +8,11 @@ import AuthGuard from './components/auth-guard';
 export const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <AuthGuard />,
-		children: [
-			{
-				index: true,
-				element: <SpiesScreen />,
-			},
-		],
+		element: (
+			<AuthGuard>
+				<SpiesScreen />
+			</AuthGuard>
+		),
 	},
 	{
 		path: '/auth',
