@@ -36,7 +36,7 @@ export default function LoginScreen() {
 		const res = await api.post('/user', data);
 
 		if (res.status === 200) {
-			setToken(res.data.token);
+			setToken(res.data);
 			navigate('/');
 		} else {
 			toast.error(res.data);
